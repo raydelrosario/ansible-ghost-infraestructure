@@ -1,0 +1,13 @@
+# Example Values
+litestream_access_key_id: "YDzhrUEiXGPq7AW5Jw"
+litestream_secret_access_key: "YDzhrUEiXGPq7AW5JwB3Zg63s4xvDa3vy45thdfkzmZWhP3uRsiRrZ"
+litestream_url: "s3://litestream.myblog.com/db"
+
+cloudinary_cloud_name: "myblog"
+cloudinary_api_key: "12524526252"
+cloudinary_api_secret: "YDzhrUEiXGPq7AW5JwB3Zg"
+cloudinary_folder: "ghost"
+
+cloudflare_token: "YDzhrUEiXGPq7AW5JwB3Zg63s4xvDa3vy45thdfkzmZWhP3uRsiRrZFHf98HvHpGwwYDzhrUEiXGPq7AW5JwB3Zg63s4xvDa3vy45thdfkzmZWhP3uRsiRrZFHf98HvHpGwwYDzhrUEiXGPq7AW5JwB3Zg63s4xvDa3vy45thdfkzmZWhP3uRsiRrZFHf98HvHpGww"
+
+ghost_url: "https://myblog.com"

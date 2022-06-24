@@ -1,0 +1,3 @@
+[server]
+# Example IP
+191.65.23.21 ansible_user=admin

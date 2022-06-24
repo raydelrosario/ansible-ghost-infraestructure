@@ -1,0 +1,20 @@
+- block:
+  - name: Firewall - Deny Incoming
+    ufw:
+      direction: incoming
+      default: deny
+
+  - name: Firewall - Allow Outgoing
+    ufw:
+      direction: outgoing
+      default: allow
+
+  - name: Firewall - Allow SSH
+    ufw:
+      rule: allow
+      name: ssh
+
+  - name: Firewall - Enabled
+    ufw:
+      state: enabled
+  become: true

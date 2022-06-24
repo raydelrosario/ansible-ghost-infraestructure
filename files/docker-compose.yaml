@@ -1,0 +1,40 @@
+version: '3'
+services:
+  ghost:
+    container_name: ghost
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: Containerfile
+      args:
+        cloudinary_cloud_name: "${CLOUDINARY_CLOUD_NAME}"
+        cloudinary_api_key: "${CLOUDINARY_API_KEY}"
+        cloudinary_api_secret: "${CLOUDINARY_API_SECRET}"
+        cloudinary_folder: "${CLOUDINARY_FOLDER}"
+    environment:
+      url:  "${GHOST_URL}"
+    ports:
+      - "2368:2368"
+    volumes:
+      - ghost:/var/lib/ghost/content
+
+  litestream:
+    container_name: litestream
+    image: docker.io/litestream/litestream:latest
+    restart: unless-stopped
+    command: replicate /data/data/ghost.db "${LITESTREAM_URL}" 
+    depends_on:
+      - ghost
+    environment:
+      LITESTREAM_ACCESS_KEY_ID: "${LITESTREAM_ACCESS_KEY_ID}"
+      LITESTREAM_SECRET_ACCESS_KEY: "${LITESTREAM_SECRET_ACCESS_KEY}"
+    volumes:
+      - ghost:/data
+  
+  cloudflared:
+    container_name: cloudflared
+    image: docker.io/cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel run --token "${CLOUDFLARE_TOKEN}"
+volumes:
+  ghost:

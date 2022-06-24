@@ -1,0 +1,45 @@
+- name: Container
+  block:
+  - name: Container - Install packages
+    package:
+      name: ['podman', 'buildah']
+      state: present
+
+  - name: Container - Install package with Pip
+    pip:
+      name: podman-compose
+
+  - name: Container - Enable user to run Podman containers
+    command: usermod --add-subuids 100000-165535 --add-subgids 100000-165535 admin
+  become: true
+
+- name: Container - Update changes UserID and GroupID
+  command: podman system migrate
+
+- name: Container - Update changes UserID and GroupID
+  command: loginctl enable-linger admin
+
+- name: Container - Create directory
+  file:
+    path: $HOME/Container
+    state: directory
+
+- name: Container - Create .env file
+  template:
+      src: .env.j2
+      dest: $HOME/Container/.env
+
+- name: Container - Copy Containerfile
+  copy:
+      src: ./files/Containerfile
+      dest: $HOME/Container
+
+- name: Container - Copy docker-compose.yaml
+  copy:
+      src: ./files/docker-compose.yaml
+      dest: $HOME/Container
+
+- name: Container - Up containers
+  command: podman-compose up --build -d
+  args:
+    chdir: $HOME/Container
